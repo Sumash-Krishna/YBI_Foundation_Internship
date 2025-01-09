@@ -1,0 +1,81 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+data = {
+    'season': [2023, 2023, 2023, 2022, 2022, 2022, 2021, 2021, 2021],
+    'team1': ['MI', 'CSK', 'RCB', 'MI', 'KKR', 'CSK', 'DC', 'RCB', 'MI'],
+    'team2': ['CSK', 'RCB', 'MI', 'KKR', 'CSK', 'MI', 'MI', 'CSK', 'KKR'],
+    'winner': ['MI', 'CSK', 'RCB', 'MI', 'KKR', 'CSK', 'DC', 'RCB', 'MI'],
+    'city': ['Mumbai', 'Chennai', 'Bangalore', 'Kolkata', 'Chennai', 'Mumbai', 'Delhi', 'Bangalore', 'Kolkata'],
+    'player_of_match': [
+        'Rohit Sharma', 'MS Dhoni', 'Virat Kohli', 'Jasprit Bumrah',
+        'Andre Russell', 'Ravindra Jadeja', 'Rishabh Pant', 'AB de Villiers', 'Kieron Pollard'
+    ],
+    'runs_scored': [168, 188, 175, 158, 200, 198, 170, 185, 165]
+}
+
+ipl_df = pd.DataFrame(data)
+# View the first few rows
+print(ipl_df.head())
+
+# Data type and missing values summary
+print(ipl_df.info())
+
+# Summary statistics
+print(ipl_df.describe())
+# Wins by each team
+team_wins = ipl_df['winner'].value_counts()
+print("Team Wins:\n", team_wins)
+
+# Bar plot for team wins
+sns.countplot(data=ipl_df, x='winner', order=team_wins.index)
+plt.title("Team Wins in IPL Seasons")
+plt.xlabel("Teams")
+plt.ylabel("Number of Wins")
+plt.show()
+# Histogram of runs scored
+plt.hist(ipl_df['runs_scored'], bins=5, color='skyblue', edgecolor='black')
+plt.title("Distribution of Runs Scored")
+plt.xlabel("Runs Scored")
+plt.ylabel("Frequency")
+plt.show()
+
+# Box plot for runs scored
+sns.boxplot(data=ipl_df, x='season', y='runs_scored')
+plt.title("Runs Scored Across Seasons")
+plt.xlabel("Season")
+plt.ylabel("Runs Scored")
+plt.show()
+
+# Player of the match count
+player_of_match_counts = ipl_df['player_of_match'].value_counts()
+print("Player of the Match Awards:\n", player_of_match_counts)
+
+# Bar plot for Player of the Match awards
+sns.barplot(x=player_of_match_counts.index, y=player_of_match_counts.values)
+plt.title("Player of the Match Awards")
+plt.xticks(rotation=45)
+plt.xlabel("Players")
+plt.ylabel("Number of Awards")
+plt.show()
+
+# Player of the match count
+player_of_match_counts = ipl_df['player_of_match'].value_counts()
+print("Player of the Match Awards:\n", player_of_match_counts)
+
+# Bar plot for Player of the Match awards
+sns.barplot(x=player_of_match_counts.index, y=player_of_match_counts.values)
+plt.title("Player of the Match Awards")
+plt.xticks(rotation=45)
+plt.xlabel("Players")
+plt.ylabel("Number of Awards")
+plt.show()
+
+# Correlation between numeric variables
+corr_matrix = ipl_df.corr()
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+plt.title("Correlation Heatmap")
+plt.show()
+
+home_advantage = ipl_df[ipl_df['team1'] == ipl_df['winner']]['city'].value_counts()
+print("Home Advantage Analysis:\n", home_advantage)
